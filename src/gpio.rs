@@ -1,3 +1,4 @@
+use crate::common;
 use volatile_register::{RW};
 
 pub struct GPIO {
@@ -17,8 +18,16 @@ struct GPIORegisterBlock {
 
 impl GPIO {
     pub fn new() -> GPIO {
-        GPIO {
-            p: unsafe { &mut *(0x8000_0004 as *mut GPIORegisterBlock) }
+        unsafe {
+            if common::GPIO_CONSTRUCTED == false {
+                common::GPIO_CONSTRUCTED = true;
+                GPIO {
+                    p: &mut *(0x8000_0004 as *mut GPIORegisterBlock) 
+                }
+            }
+            else { 
+                panic!("You may construct only one instance of GPIO.")
+            }
         }
     }
 
