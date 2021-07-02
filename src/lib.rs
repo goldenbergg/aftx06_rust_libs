@@ -1,6 +1,5 @@
 #![no_std]
 
+pub mod ahb;
+pub mod apb;
 pub mod common;
-pub mod gpio;
-pub mod pwm;
-pub mod timer;
